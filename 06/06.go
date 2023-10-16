@@ -13,7 +13,7 @@ func check(err error) {
 	}
 }
 
-const SIZE = 4
+const SIZE = 14
 
 // Return true if the string contains unique characters.
 // Not guarranted to work with unicode.
