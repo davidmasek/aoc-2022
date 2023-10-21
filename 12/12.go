@@ -9,7 +9,7 @@ import (
 
 const LOGGING = false
 const TEST = true
-const B_SIDE = false
+const B_SIDE = true
 
 func check(err error) {
 	if err != nil {
@@ -30,8 +30,12 @@ func InBounds(r, c, height, width int) bool {
 func Neighbors(n Node, height, width int, visited [][]bool, maze [][]int) []Node {
 	available := make([]Node, 0)
 	for _, nb := range []Node{{n.r - 1, n.c}, {n.r + 1, n.c}, {n.r, n.c - 1}, {n.r, n.c + 1}} {
-		if InBounds(nb.r, nb.c, height, width) && !visited[nb.r][nb.c] && maze[n.r][n.c]+1 >= maze[nb.r][nb.c] {
-			available = append(available, nb)
+		if InBounds(nb.r, nb.c, height, width) && !visited[nb.r][nb.c] {
+			if B_SIDE && maze[n.r][n.c] <= maze[nb.r][nb.c]+1 {
+				available = append(available, nb)
+			} else if !B_SIDE && maze[n.r][n.c]+1 >= maze[nb.r][nb.c] {
+				available = append(available, nb)
+			}
 		}
 	}
 	return available
@@ -90,36 +94,66 @@ func main() {
 	for i := 0; i < height; i++ {
 		visited[i] = make([]bool, width)
 	}
+
+	distances := make([][]int, height)
+	for i := 0; i < height; i++ {
+		distances[i] = make([]int, width)
+		for j := 0; j < width; j++ {
+			distances[i][j] = -1
+		}
+	}
 	// start
-	queue = append(queue, Node{start.r, start.c})
-	visited[start.r][start.c] = true
+	if B_SIDE {
+		queue = append(queue, Node{goal.r, goal.c})
+	} else {
+		queue = append(queue, Node{start.r, start.c})
+	}
+	n := queue[0]
+	visited[n.r][n.c] = true
 	var prev map[Node]Node = make(map[Node]Node)
+	distances[n.r][n.c] = 0
 
 	for len(queue) > 0 {
 		n := queue[0]
 		queue = queue[1:]
-		if n.r == goal.r && n.c == goal.c {
+		if !B_SIDE && n.r == goal.r && n.c == goal.c {
 			fmt.Println("Found path")
 			break
 		}
 		for _, nb := range Neighbors(n, height, width, visited, maze) {
 			queue = append(queue, nb)
 			visited[nb.r][nb.c] = true
+			distances[nb.r][nb.c] = distances[n.r][n.c] + 1
 			prev[nb] = n
 		}
 	}
-	path := make([]Node, 0)
-	c := goal
-	path = append(path, c)
-	for {
-		c = prev[c]
-		path = append(path, c)
-		if c == start {
-			break
+	if !TEST {
+		// pretty print distances from start
+		for i := 0; i < height; i++ {
+			for j := 0; j < width; j++ {
+				fmt.Printf("%2d ", distances[i][j])
+			}
+			fmt.Println()
+		}
+		fmt.Println("-----")
+	}
+	// print only those whose height is zero on single lines
+	min := distances[0][0]
+	for i := 0; i < height; i++ {
+		for j := 0; j < width; j++ {
+			if maze[i][j] == 0 {
+				if !TEST {
+					fmt.Printf("(%d,%d): (%d)\n", i, j, distances[i][j])
+				}
+				if distances[i][j] < min && distances[i][j] != -1 {
+					min = distances[i][j]
+				}
+			}
 		}
 	}
-	for i := len(path) - 1; i >= 0; i-- {
-		debug(path[i])
+	if !TEST {
+		fmt.Println("-----")
 	}
-	fmt.Println(len(path) - 1)
+	fmt.Println("from start", distances[start.r][start.c])
+	fmt.Println("nearest", min)
 }
