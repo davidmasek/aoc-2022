@@ -5,10 +5,12 @@ import (
 	"fmt"
 	"os"
 	"strings"
+	"sync"
+	"time"
 )
 
 const LOGGING = false
-const TEST = false
+const TEST = true
 const B_SIDE = false
 
 func check(err error) {
@@ -75,19 +77,20 @@ func main() {
 			panic("Expected empty line")
 		}
 	}
-	results := make([]Result, 0)
+	var sum int
+	fmt.Println("Synchronous")
+	fmt.Println("-----")
+	start := time.Now()
+	results := make([]Result, len(inputs))
 	for _, pair := range inputs {
-		debug(pair.left)
-		debug(pair.right)
 		comp := Compare(pair.left, pair.right)
-		debug(comp)
-		debug("-----")
 		results = append(results, Result{pair.index, comp})
 	}
+	elapsed := time.Since(start)
 
 	debug(results)
 	debug("-----")
-	sum := 0
+	sum = 0
 	for _, result := range results {
 		if result.value == RIGHT {
 			sum += result.index
@@ -95,5 +98,35 @@ func main() {
 	}
 	// A: 5808
 	fmt.Println(sum)
+	fmt.Println(elapsed)
 
+	fmt.Println("-----")
+	fmt.Println("Coroutines")
+	fmt.Println("-----")
+
+	// Very naive - creating a goroutine for each input pair
+	// Just for fun
+	start = time.Now()
+	wg := new(sync.WaitGroup)
+	resultsChan := make(chan Result, len(inputs))
+	for _, pair := range inputs {
+		wg.Add(1)
+		go func(pair Pair) {
+			defer wg.Done()
+			comp := Compare(pair.left, pair.right)
+			resultsChan <- Result{pair.index, comp}
+		}(pair)
+	}
+	wg.Wait()
+	close(resultsChan)
+	elapsed = time.Since(start)
+
+	sum = 0
+	for result := range resultsChan {
+		if result.value == RIGHT {
+			sum += result.index
+		}
+	}
+	fmt.Println(sum)
+	fmt.Println(elapsed)
 }
