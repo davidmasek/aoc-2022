@@ -129,4 +129,60 @@ func main() {
 	}
 	fmt.Println(sum)
 	fmt.Println(elapsed)
+	fmt.Println("-----")
+
+	// Part B
+	packets := make([]*Node, len(inputs)*2)
+	for i, j := 0, 0; i < len(inputs); i, j = i+1, j+2 {
+		packets[j] = inputs[i].left
+		packets[j+1] = inputs[i].right
+	}
+	control2, _ := ReadNode("[[2]]", 1)
+	packets = append(packets, control2)
+	control6, _ := ReadNode("[[6]]", 1)
+	packets = append(packets, control6)
+	BubbleSort(packets, func(a, b **Node) bool { return Compare(*a, *b) == RIGHT })
+	res := 1
+	for i, packet := range packets {
+		if packet == control2 {
+			res *= i + 1
+			fmt.Println(i+1, "[[2]]")
+		} else if packet == control6 {
+			res *= i + 1
+			fmt.Println(i+1, "[[6]]")
+		}
+	}
+	debug(packets)
+	fmt.Println(res)
+	fmt.Println("-----")
+
+	// Part B - alt
+	packets = make([]*Node, len(inputs)*2)
+	for i, j := 0, 0; i < len(inputs); i, j = i+1, j+2 {
+		packets[j] = inputs[i].left
+		packets[j+1] = inputs[i].right
+	}
+	control2, _ = ReadNode("[[2]]", 1)
+	control6, _ = ReadNode("[[6]]", 1)
+	control2Index := 0
+	control6Index := 0
+	for _, packet := range packets {
+		if Compare(packet, control2) == RIGHT {
+			control2Index++
+		} else if Compare(packet, control6) == RIGHT {
+			control6Index++
+		}
+	}
+
+	// it's zero based so add 1
+	control2Index++
+	control6Index++
+	// we only checked control6 from those larger than control2
+	// so we actually calculated the shift
+	control6Index += control2Index
+	res = control2Index * control6Index
+	fmt.Println(control2Index, "[[2]]")
+	fmt.Println(control6Index, "[[6]]")
+	fmt.Println(res)
+	fmt.Println("-----")
 }
