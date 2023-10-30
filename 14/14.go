@@ -10,7 +10,7 @@ import (
 
 const LOGGING = false
 const TEST = true
-const B_SIDE = false
+const B_SIDE = true
 
 func check(err error) {
 	if err != nil {
@@ -59,7 +59,14 @@ func Blocked(point Point, lines []Blocker) bool {
 	return false
 }
 
-type SandPile = map[Point]bool
+type SandPile struct {
+	pile map[Point]bool
+}
+
+func (pile SandPile) Contains(p Point) bool {
+	_, ok := pile.pile[p]
+	return ok
+}
 
 func main() {
 	fmt.Println(len(os.Args), os.Args)
@@ -125,6 +132,9 @@ func main() {
 
 	sand := Point{source.x, source.y}
 	sandCount := 0
+	var pile SandPile = SandPile{make(map[Point]bool)}
+	lines = append(lines, pile)
+
 	for {
 		if sand.y > 1000 {
 			fmt.Println("abyss ~~")
@@ -145,7 +155,8 @@ func main() {
 			continue
 		}
 		sandCount++
-		lines = append(lines, Line{Point{sand.x, sand.y}, Point{sand.x, sand.y}})
+		pile.pile[sand] = true
+		// lines = append(lines, Line{Point{sand.x, sand.y}, Point{sand.x, sand.y}})
 		if sand.x == source.x && sand.y == source.y {
 			fmt.Println("src blocked")
 			break
