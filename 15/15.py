@@ -11,10 +11,14 @@ def parse(filename):
             xs = re.findall(r"x=(-?\d+)", line)
             ys = re.findall(r"y=(-?\d+)", line)
             sensor = {
-                "X": int(xs[0]),
-                "Y": int(ys[0]),
-                "BeaconX": int(xs[1]),
-                "BeaconY": int(ys[1]),
+                "Position": {
+                    "X": int(xs[0]),
+                    "Y": int(ys[0]),
+                },
+                "Beacon": {
+                    "X": int(xs[1]),
+                    "Y": int(ys[1]),
+                },
             }
             sensors.append(sensor)
     return sensors

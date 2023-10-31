@@ -1,86 +1,142 @@
 [
   {
-    "X": 2,
-    "Y": 18,
-    "BeaconX": -2,
-    "BeaconY": 15
+    "Position": {
+      "X": 2,
+      "Y": 18
+    },
+    "Beacon": {
+      "X": -2,
+      "Y": 15
+    }
   },
   {
-    "X": 9,
-    "Y": 16,
-    "BeaconX": 10,
-    "BeaconY": 16
+    "Position": {
+      "X": 9,
+      "Y": 16
+    },
+    "Beacon": {
+      "X": 10,
+      "Y": 16
+    }
   },
   {
-    "X": 13,
-    "Y": 2,
-    "BeaconX": 15,
-    "BeaconY": 3
+    "Position": {
+      "X": 13,
+      "Y": 2
+    },
+    "Beacon": {
+      "X": 15,
+      "Y": 3
+    }
   },
   {
-    "X": 12,
-    "Y": 14,
-    "BeaconX": 10,
-    "BeaconY": 16
+    "Position": {
+      "X": 12,
+      "Y": 14
+    },
+    "Beacon": {
+      "X": 10,
+      "Y": 16
+    }
   },
   {
-    "X": 10,
-    "Y": 20,
-    "BeaconX": 10,
-    "BeaconY": 16
+    "Position": {
+      "X": 10,
+      "Y": 20
+    },
+    "Beacon": {
+      "X": 10,
+      "Y": 16
+    }
   },
   {
-    "X": 14,
-    "Y": 17,
-    "BeaconX": 10,
-    "BeaconY": 16
+    "Position": {
+      "X": 14,
+      "Y": 17
+    },
+    "Beacon": {
+      "X": 10,
+      "Y": 16
+    }
   },
   {
-    "X": 8,
-    "Y": 7,
-    "BeaconX": 2,
-    "BeaconY": 10
+    "Position": {
+      "X": 8,
+      "Y": 7
+    },
+    "Beacon": {
+      "X": 2,
+      "Y": 10
+    }
   },
   {
-    "X": 2,
-    "Y": 0,
-    "BeaconX": 2,
-    "BeaconY": 10
+    "Position": {
+      "X": 2,
+      "Y": 0
+    },
+    "Beacon": {
+      "X": 2,
+      "Y": 10
+    }
   },
   {
-    "X": 0,
-    "Y": 11,
-    "BeaconX": 2,
-    "BeaconY": 10
+    "Position": {
+      "X": 0,
+      "Y": 11
+    },
+    "Beacon": {
+      "X": 2,
+      "Y": 10
+    }
   },
   {
-    "X": 20,
-    "Y": 14,
-    "BeaconX": 25,
-    "BeaconY": 17
+    "Position": {
+      "X": 20,
+      "Y": 14
+    },
+    "Beacon": {
+      "X": 25,
+      "Y": 17
+    }
   },
   {
-    "X": 17,
-    "Y": 20,
-    "BeaconX": 21,
-    "BeaconY": 22
+    "Position": {
+      "X": 17,
+      "Y": 20
+    },
+    "Beacon": {
+      "X": 21,
+      "Y": 22
+    }
   },
   {
-    "X": 16,
-    "Y": 7,
-    "BeaconX": 15,
-    "BeaconY": 3
+    "Position": {
+      "X": 16,
+      "Y": 7
+    },
+    "Beacon": {
+      "X": 15,
+      "Y": 3
+    }
   },
   {
-    "X": 14,
-    "Y": 3,
-    "BeaconX": 15,
-    "BeaconY": 3
+    "Position": {
+      "X": 14,
+      "Y": 3
+    },
+    "Beacon": {
+      "X": 15,
+      "Y": 3
+    }
   },
   {
-    "X": 20,
-    "Y": 1,
-    "BeaconX": 15,
-    "BeaconY": 3
+    "Position": {
+      "X": 20,
+      "Y": 1
+    },
+    "Beacon": {
+      "X": 15,
+      "Y": 3
+    }
   }
 ]
