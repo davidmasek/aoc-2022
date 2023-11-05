@@ -1,0 +1,82 @@
+[
+  {
+    "name": "AA",
+    "flow": 0,
+    "neighbors": [
+      "DD",
+      "II",
+      "BB"
+    ]
+  },
+  {
+    "name": "BB",
+    "flow": 13,
+    "neighbors": [
+      "CC",
+      "AA"
+    ]
+  },
+  {
+    "name": "CC",
+    "flow": 2,
+    "neighbors": [
+      "DD",
+      "BB"
+    ]
+  },
+  {
+    "name": "DD",
+    "flow": 20,
+    "neighbors": [
+      "CC",
+      "AA",
+      "EE"
+    ]
+  },
+  {
+    "name": "EE",
+    "flow": 3,
+    "neighbors": [
+      "FF",
+      "DD"
+    ]
+  },
+  {
+    "name": "FF",
+    "flow": 0,
+    "neighbors": [
+      "EE",
+      "GG"
+    ]
+  },
+  {
+    "name": "GG",
+    "flow": 0,
+    "neighbors": [
+      "FF",
+      "HH"
+    ]
+  },
+  {
+    "name": "HH",
+    "flow": 22,
+    "neighbors": [
+      "GG"
+    ]
+  },
+  {
+    "name": "II",
+    "flow": 0,
+    "neighbors": [
+      "AA",
+      "JJ"
+    ]
+  },
+  {
+    "name": "JJ",
+    "flow": 21,
+    "neighbors": [
+      "II"
+    ]
+  }
+]

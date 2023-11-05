@@ -1,0 +1,464 @@
+[
+  {
+    "name": "SW",
+    "flow": 0,
+    "neighbors": [
+      "LX",
+      "LD"
+    ]
+  },
+  {
+    "name": "VS",
+    "flow": 0,
+    "neighbors": [
+      "JO",
+      "OO"
+    ]
+  },
+  {
+    "name": "OO",
+    "flow": 10,
+    "neighbors": [
+      "KK",
+      "HD",
+      "VS",
+      "KI"
+    ]
+  },
+  {
+    "name": "DZ",
+    "flow": 8,
+    "neighbors": [
+      "KV",
+      "GX",
+      "WQ",
+      "BA",
+      "PK"
+    ]
+  },
+  {
+    "name": "GX",
+    "flow": 0,
+    "neighbors": [
+      "AA",
+      "DZ"
+    ]
+  },
+  {
+    "name": "IF",
+    "flow": 0,
+    "neighbors": [
+      "OI",
+      "DW"
+    ]
+  },
+  {
+    "name": "BO",
+    "flow": 0,
+    "neighbors": [
+      "UJ",
+      "ZT"
+    ]
+  },
+  {
+    "name": "KI",
+    "flow": 0,
+    "neighbors": [
+      "OO",
+      "KU"
+    ]
+  },
+  {
+    "name": "JT",
+    "flow": 3,
+    "neighbors": [
+      "FC",
+      "AM",
+      "KV",
+      "XP",
+      "XZ"
+    ]
+  },
+  {
+    "name": "TQ",
+    "flow": 0,
+    "neighbors": [
+      "AA",
+      "DW"
+    ]
+  },
+  {
+    "name": "KK",
+    "flow": 0,
+    "neighbors": [
+      "QW",
+      "OO"
+    ]
+  },
+  {
+    "name": "NR",
+    "flow": 0,
+    "neighbors": [
+      "UG",
+      "XM"
+    ]
+  },
+  {
+    "name": "VO",
+    "flow": 0,
+    "neighbors": [
+      "YR",
+      "AA"
+    ]
+  },
+  {
+    "name": "MS",
+    "flow": 17,
+    "neighbors": [
+      "LT",
+      "LX"
+    ]
+  },
+  {
+    "name": "JO",
+    "flow": 0,
+    "neighbors": [
+      "YR",
+      "VS"
+    ]
+  },
+  {
+    "name": "ZB",
+    "flow": 0,
+    "neighbors": [
+      "UJ",
+      "LT"
+    ]
+  },
+  {
+    "name": "ZT",
+    "flow": 0,
+    "neighbors": [
+      "XM",
+      "BO"
+    ]
+  },
+  {
+    "name": "YR",
+    "flow": 9,
+    "neighbors": [
+      "VO",
+      "FY",
+      "WB",
+      "JO"
+    ]
+  },
+  {
+    "name": "QS",
+    "flow": 0,
+    "neighbors": [
+      "QW",
+      "FY"
+    ]
+  },
+  {
+    "name": "UD",
+    "flow": 0,
+    "neighbors": [
+      "CA",
+      "JB"
+    ]
+  },
+  {
+    "name": "AP",
+    "flow": 0,
+    "neighbors": [
+      "CA",
+      "DW"
+    ]
+  },
+  {
+    "name": "KV",
+    "flow": 0,
+    "neighbors": [
+      "JT",
+      "DZ"
+    ]
+  },
+  {
+    "name": "JH",
+    "flow": 0,
+    "neighbors": [
+      "IK",
+      "UJ"
+    ]
+  },
+  {
+    "name": "LD",
+    "flow": 15,
+    "neighbors": [
+      "IK",
+      "SW"
+    ]
+  },
+  {
+    "name": "XK",
+    "flow": 0,
+    "neighbors": [
+      "XZ",
+      "BH"
+    ]
+  },
+  {
+    "name": "XM",
+    "flow": 11,
+    "neighbors": [
+      "XP",
+      "CJ",
+      "ZT",
+      "NR"
+    ]
+  },
+  {
+    "name": "FY",
+    "flow": 0,
+    "neighbors": [
+      "YR",
+      "QS"
+    ]
+  },
+  {
+    "name": "GI",
+    "flow": 22,
+    "neighbors": [
+      "TI"
+    ]
+  },
+  {
+    "name": "JB",
+    "flow": 14,
+    "neighbors": [
+      "WB",
+      "UD",
+      "WQ",
+      "HD"
+    ]
+  },
+  {
+    "name": "DW",
+    "flow": 6,
+    "neighbors": [
+      "AP",
+      "TQ",
+      "NQ",
+      "IF",
+      "PK"
+    ]
+  },
+  {
+    "name": "UJ",
+    "flow": 13,
+    "neighbors": [
+      "JH",
+      "ZB",
+      "BO"
+    ]
+  },
+  {
+    "name": "KU",
+    "flow": 0,
+    "neighbors": [
+      "CA",
+      "KI"
+    ]
+  },
+  {
+    "name": "WQ",
+    "flow": 0,
+    "neighbors": [
+      "JB",
+      "DZ"
+    ]
+  },
+  {
+    "name": "BA",
+    "flow": 0,
+    "neighbors": [
+      "BH",
+      "DZ"
+    ]
+  },
+  {
+    "name": "AA",
+    "flow": 0,
+    "neighbors": [
+      "YX",
+      "TQ",
+      "VO",
+      "GX",
+      "QP"
+    ]
+  },
+  {
+    "name": "TI",
+    "flow": 0,
+    "neighbors": [
+      "GI",
+      "UG"
+    ]
+  },
+  {
+    "name": "FC",
+    "flow": 0,
+    "neighbors": [
+      "QP",
+      "JT"
+    ]
+  },
+  {
+    "name": "CA",
+    "flow": 18,
+    "neighbors": [
+      "KU",
+      "UD",
+      "AP"
+    ]
+  },
+  {
+    "name": "QW",
+    "flow": 25,
+    "neighbors": [
+      "QS",
+      "KK"
+    ]
+  },
+  {
+    "name": "XZ",
+    "flow": 0,
+    "neighbors": [
+      "JT",
+      "XK"
+    ]
+  },
+  {
+    "name": "YX",
+    "flow": 0,
+    "neighbors": [
+      "AA",
+      "CJ"
+    ]
+  },
+  {
+    "name": "OI",
+    "flow": 0,
+    "neighbors": [
+      "IF",
+      "BH"
+    ]
+  },
+  {
+    "name": "NQ",
+    "flow": 0,
+    "neighbors": [
+      "AM",
+      "DW"
+    ]
+  },
+  {
+    "name": "QP",
+    "flow": 0,
+    "neighbors": [
+      "AA",
+      "FC"
+    ]
+  },
+  {
+    "name": "AM",
+    "flow": 0,
+    "neighbors": [
+      "NQ",
+      "JT"
+    ]
+  },
+  {
+    "name": "XP",
+    "flow": 0,
+    "neighbors": [
+      "XM",
+      "JT"
+    ]
+  },
+  {
+    "name": "BH",
+    "flow": 12,
+    "neighbors": [
+      "BA",
+      "XK",
+      "OI"
+    ]
+  },
+  {
+    "name": "HD",
+    "flow": 0,
+    "neighbors": [
+      "OO",
+      "JB"
+    ]
+  },
+  {
+    "name": "LT",
+    "flow": 0,
+    "neighbors": [
+      "MS",
+      "ZB"
+    ]
+  },
+  {
+    "name": "LX",
+    "flow": 0,
+    "neighbors": [
+      "MS",
+      "SW"
+    ]
+  },
+  {
+    "name": "CJ",
+    "flow": 0,
+    "neighbors": [
+      "XM",
+      "YX"
+    ]
+  },
+  {
+    "name": "PK",
+    "flow": 0,
+    "neighbors": [
+      "DW",
+      "DZ"
+    ]
+  },
+  {
+    "name": "IK",
+    "flow": 0,
+    "neighbors": [
+      "LD",
+      "JH"
+    ]
+  },
+  {
+    "name": "WB",
+    "flow": 0,
+    "neighbors": [
+      "YR",
+      "JB"
+    ]
+  },
+  {
+    "name": "UG",
+    "flow": 21,
+    "neighbors": [
+      "TI",
+      "NR"
+    ]
+  }
+]
