@@ -1,6 +1,7 @@
 package main
 
 import (
+	"container/heap"
 	"fmt"
 	"io/fs"
 	"log"
@@ -31,6 +32,40 @@ type Node struct {
 	openedValves map[string]bool
 	day          int
 	actions      []string
+	priority     int // The priority of the item in the queue.
+	index        int // The index of the item in the heap.
+}
+
+type PriorityQueue []*Node
+
+func (pq PriorityQueue) Len() int { return len(pq) }
+
+func (pq PriorityQueue) Less(i, j int) bool {
+	// We want Pop to give us the highest, not lowest, priority so we use greater than here.
+	return pq[i].priority > pq[j].priority
+}
+
+func (pq PriorityQueue) Swap(i, j int) {
+	pq[i], pq[j] = pq[j], pq[i]
+	pq[i].index = i
+	pq[j].index = j
+}
+
+func (pq *PriorityQueue) Push(x any) {
+	n := len(*pq)
+	item := x.(*Node)
+	item.index = n
+	*pq = append(*pq, item)
+}
+
+func (pq *PriorityQueue) Pop() any {
+	old := *pq
+	n := len(old)
+	item := old[n-1]
+	old[n-1] = nil  // avoid memory leak
+	item.index = -1 // for safety
+	*pq = old[0 : n-1]
+	return item
 }
 
 // Compute distances between all pairs using Floyd-Warshall algorithm
@@ -124,8 +159,16 @@ func solve(valvesArr []InputValve) {
 	const END_DAY = N_DAYS
 	const OPEN_TIME = 1
 
+	maxFlow := 0
+	for _, v := range valves {
+		maxFlow += v.Flow
+	}
+
 	// BFS
-	q := make([]Node, 0)
+	// q := make([]Node, 0)
+	// A* search
+	q := make(PriorityQueue, 0)
+	heap.Init(&q)
 	// // note that this is not perfect since same valves opened in different order
 	// // will be considered different
 	// // we can probably just ignore seen for now, since it's not possible to return
@@ -150,7 +193,11 @@ func solve(valvesArr []InputValve) {
 		travelTime := dist["AA"][valveName]
 		totalTime := travelTime + OPEN_TIME
 		if totalTime < END_DAY {
-			q = append(q, Node{
+			// q = append(q, Node{
+			// Heuristic == value that will definitely flow + what would happen if we opened all the valves
+			// Should always be optimistic
+			heuristic := maxFlow * (END_DAY - totalTime)
+			heap.Push(&q, &Node{
 				position:    valveName,
 				currentFlow: valves[valveName].Flow,
 				released:    0,
@@ -158,15 +205,18 @@ func solve(valvesArr []InputValve) {
 				openedValves: map[string]bool{
 					valveName: true,
 				},
-				actions: []string{fmt.Sprintf("[%d] open %s", totalTime, valveName)},
+				actions:  []string{fmt.Sprintf("[%d] open %s", totalTime, valveName)},
+				priority: heuristic,
 			})
 		}
 	}
 
 	bestSolution := 0
-	bestSolutionNode := Node{}
+	bestSolutionNode := &Node{}
+	openedCount := 0
 
 	for len(q) > 0 {
+		openedCount++
 		currentNode := q[0]
 		q = q[1:]
 		// Generate neighbors for all possible actions
@@ -192,21 +242,27 @@ func solve(valvesArr []InputValve) {
 			actions := make([]string, len(currentNode.actions))
 			copy(actions, currentNode.actions)
 			actions = append(actions, fmt.Sprintf("[%d] open %s", endTime, valveName))
-			// TODO: <= ??
 			if endTime < END_DAY {
-				n := Node{
+				// See above for heuristic explanation
+				heuristic := currentNode.released + currentNode.currentFlow*totalTime
+				heuristic += maxFlow * (END_DAY - endTime)
+				n := &Node{
 					position:    valveName,
 					currentFlow: currentNode.currentFlow + valves[valveName].Flow,
 					released:    currentNode.released + currentNode.currentFlow*totalTime,
 					day:         endTime,
 					actions:     actions,
+					priority:    heuristic,
 				}
 				n.openedValves = make(map[string]bool)
 				for k, v := range currentNode.openedValves {
 					n.openedValves[k] = v
 				}
 				n.openedValves[valveName] = true
-				q = append(q, n)
+				if heuristic >= bestSolution {
+					// q = append(q, n)
+					heap.Push(&q, n)
+				}
 				movePossible = true
 			}
 		}
@@ -223,12 +279,17 @@ func solve(valvesArr []InputValve) {
 				actions = append(actions, fmt.Sprintf("[%d] wait %d", currentNode.day+daysTillEnd, daysTillEnd))
 				currentNode.actions = actions
 				bestSolution = totalReleased
+				if bestSolution == 1651 || bestSolution == 1701 {
+					fmt.Println("Found best solution after", openedCount, "opened nodes")
+				}
 				bestSolutionNode = currentNode
 			}
 		}
 	}
 	fmt.Println("T:", END_DAY, "A:", bestSolution)
 	fmt.Println(strings.Join(bestSolutionNode.actions, ", "))
+	fmt.Println(bestSolutionNode.priority)
+	fmt.Println("# Opened:", openedCount)
 }
 
 func main() {
