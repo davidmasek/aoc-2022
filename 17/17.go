@@ -139,6 +139,31 @@ func draw(rocks []*Rock) {
 	fmt.Println("+-------+")
 }
 
+func (rock *Rock) isBlockedAt(shift Point, pile map[Point]bool, chamberWidth int) bool {
+	if rock.position.x+shift.x < 0 {
+		// fmt.Println("blocked by left wall")
+		return true
+	}
+	if rock.position.x+shift.x+rock.w > chamberWidth {
+		// fmt.Println("blocked by right wall")
+		return true
+	}
+	if rock.position.y-rock.h+1+shift.y < 0 {
+		// fmt.Println("blocked by ground")
+		return true
+	}
+
+	for _, p := range rock.blocks {
+		shiftedX := rock.position.x + p.x + shift.x
+		shiftedY := rock.position.y + p.y + shift.y
+		if _, blocked := pile[Point{shiftedX, shiftedY}]; blocked {
+			// fmt.Println("blocked by other rocks", shiftedX, shiftedY, pile)
+			return true
+		}
+	}
+	return false
+}
+
 func solve(winds string) {
 	const CHAMBER_WIDTH = 7
 	// start with left edge this from left edge of chamber
@@ -149,60 +174,26 @@ func solve(winds string) {
 	rock := RockMinus(Point{START_DX, START_DY})
 	rocks = append(rocks, rock)
 	pile := make(map[Point]bool)
-	draw(rocks)
+	// draw(rocks)
 	fallenCounter := 0
 	for round := 0; ; round++ {
 		windIndex := round % len(winds)
 		wind := winds[windIndex]
 		// fmt.Println("WIND:", string(wind), "Round:", round)
-		// if round == 11 {
-		// 	fmt.Println("hey")
-		// }
+		var shift Point
 		if wind == '>' {
-			if rock.position.x+rock.w < CHAMBER_WIDTH {
-				isBlocked := false
-				for _, p := range rock.blocks {
-					shiftedX := p.x + rock.position.x + 1
-					y := p.y + rock.position.y
-					if _, blocked := pile[Point{shiftedX, y}]; blocked {
-						isBlocked = true
-						break
-					}
-				}
-				if !isBlocked {
-					rock.position.x++
-				}
-			}
+			shift.x = 1
 		} else if wind == '<' {
-			if rock.position.x >= 1 {
-				isBlocked := false
-				for _, p := range rock.blocks {
-					shiftedX := p.x + rock.position.x - 1
-					y := p.y + rock.position.y
-					if _, blocked := pile[Point{shiftedX, y}]; blocked {
-						isBlocked = true
-						break
-					}
-				}
-				if !isBlocked {
-					rock.position.x--
-				}
-			}
+			shift.x = -1
 		} else {
 			panic("unexpected input")
 		}
-		// draw(rocks)
-		blockedBelow := (rock.position.y - rock.h) < 0
-		if !blockedBelow {
-			for _, p := range rock.blocks {
-				x := p.x + rock.position.x
-				shiftedY := p.y + rock.position.y - 1
-				if _, blocked := pile[Point{x, shiftedY}]; blocked {
-					blockedBelow = true
-					break
-				}
-			}
+		if !rock.isBlockedAt(shift, pile, CHAMBER_WIDTH) {
+			// fmt.Println("can move")
+			rock.position.x += shift.x
 		}
+		// draw(rocks)
+		blockedBelow := rock.isBlockedAt(Point{0, -1}, pile, CHAMBER_WIDTH)
 		if blockedBelow {
 			// fmt.Println("--- NEW ROCK ---")
 			for _, p := range rock.blocks {
