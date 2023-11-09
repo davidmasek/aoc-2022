@@ -1,6 +1,10 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+)
+
+const KEY = 811589153
 
 type Leaf struct {
 	Value            int
@@ -77,18 +81,24 @@ func solveLinked(arr []int) {
 	last.Next = head
 	head.Prev = last
 
-	for _, leaf := range originalOrder {
-		shift := leaf.Value
-		for shift > 0 {
-			leaf.MoveRight(len(arr))
-			shift--
+	MOD := len(arr) - 1
+	N_ITERS := 10
+	for i := 0; i < N_ITERS; i++ {
+		for _, leaf := range originalOrder {
+			shift := leaf.Value * (KEY % MOD)
+			for shift > 0 {
+				shift %= MOD
+				leaf.MoveRight(len(arr))
+				shift--
+			}
+			for shift < 0 {
+				shift %= MOD
+				leaf.MoveLeft(len(arr))
+				shift++
+			}
+			// fmt.Println(leaf.Value, "moves between", leaf.Prev.Value, "and", leaf.Next.Value)
+			// leaf.Print()
 		}
-		for shift < 0 {
-			leaf.MoveLeft(len(arr))
-			shift++
-		}
-		// fmt.Println(leaf.Value, "moves between", leaf.Prev.Value, "and", leaf.Next.Value)
-		// leaf.Print()
 	}
 
 	leaf := originalOrder[0]
@@ -101,8 +111,8 @@ func solveLinked(arr []int) {
 		leaf = leaf.Next
 		j := i + 1
 		if j%1000 == 0 {
-			fmt.Println(j, leaf.Value)
-			sum += leaf.Value
+			fmt.Println(j, leaf.Value, leaf.Value*KEY)
+			sum += leaf.Value * KEY
 		}
 	}
 	fmt.Println(sum)
