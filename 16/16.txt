@@ -1,0 +1,15 @@
+!! == Minute 2 ==
+!! The elephant opens valve DD.
+
+!! == Minute 3 ==
+!! You open valve JJ.
+
+!! == Minute 7 ==
+!! You open valve BB.
+!! The elephant opens valve HH.
+
+!! == Minute 9 ==
+!! You open valve CC.
+
+!! == Minute 11 ==
+!! The elephant opens valve EE.
