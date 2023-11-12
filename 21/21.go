@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"strings"
 )
 
 type Monkey struct {
@@ -13,6 +14,9 @@ type Monkey struct {
 	Blocks     []string
 	LeftValue  int
 	RightValue int
+	LeftDone   bool
+	RightDone  bool
+	Expression string
 }
 
 func solve(monkeysArr []Monkey) {
@@ -45,15 +49,15 @@ func solve(monkeysArr []Monkey) {
 		leafs = leafs[1:]
 		for _, name := range leaf.Blocks {
 			if leaf.Name == monkeys[name].LeftName {
-				monkeys[name].LeftName = ""
+				monkeys[name].LeftDone = true
 				monkeys[name].LeftValue = leaf.Number
 			} else if leaf.Name == monkeys[name].RightName {
-				monkeys[name].RightName = ""
+				monkeys[name].RightDone = true
 				monkeys[name].RightValue = leaf.Number
 			} else {
 				panic("Incorrect state")
 			}
-			if monkeys[name].LeftName == "" && monkeys[name].RightName == "" {
+			if monkeys[name].LeftDone && monkeys[name].RightDone {
 				switch monkeys[name].Op {
 				case "+":
 					monkeys[name].Number = monkeys[name].LeftValue + monkeys[name].RightValue
@@ -67,12 +71,39 @@ func solve(monkeysArr []Monkey) {
 					panic(leaf.Op)
 
 				}
+				current := monkeys[name]
+				if current.Name == "root" {
+					monkeys[name].Expression = fmt.Sprintf("%s\n================\n%s",
+						monkeys[current.LeftName].Expression,
+						monkeys[current.RightName].Expression,
+					)
+					fmt.Println("[root] Expression:", monkeys[name].Expression)
+				} else if current.Name == "humn" {
+					// actually set during loading, but this should be more general in case of other inputs
+					monkeys[name].Expression = "x"
+					fmt.Println("[humn] Expression:", monkeys[name].Expression)
+				} else {
+					left := monkeys[current.LeftName].Expression
+					if !strings.Contains(left, "x") {
+						left = fmt.Sprintf("%d", monkeys[current.LeftName].Number)
+					}
+					right := monkeys[current.RightName].Expression
+					if !strings.Contains(right, "x") {
+						right = fmt.Sprintf("%d", monkeys[current.RightName].Number)
+					}
+					monkeys[name].Expression = fmt.Sprintf("(%s %s %s)",
+						left,
+						monkeys[name].Op,
+						right,
+					)
+				}
 				leafs = append(leafs, monkeys[name])
 			}
 		}
 	}
 	fmt.Println("# Opened:", counter)
-	fmt.Println(monkeys["root"])
+	fmt.Println("A:", monkeys["root"].Number)
+	// log.Fatal("Done")
 }
 
 func main() {

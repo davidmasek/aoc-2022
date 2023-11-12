@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	"fmt"
 	"regexp"
 	"strconv"
 	"strings"
@@ -39,7 +40,17 @@ func ParseInput(input string) ([]Monkey, error) {
 			if err != nil {
 				return nil, err
 			}
-			monkeys = append(monkeys, Monkey{Name: matches[1], Number: number})
+			exp := fmt.Sprintf("%d", number)
+			if matches[1] == "humn" {
+				exp = "x"
+			}
+			monkeys = append(monkeys, Monkey{
+				Name:       matches[1],
+				Number:     number,
+				LeftDone:   true,
+				RightDone:  true,
+				Expression: exp,
+			})
 		} else if opPattern.MatchString(line) {
 			matches := opPattern.FindStringSubmatch(line)
 			monkeys = append(monkeys, Monkey{
@@ -47,6 +58,8 @@ func ParseInput(input string) ([]Monkey, error) {
 				Op:        matches[3],
 				LeftName:  matches[2],
 				RightName: matches[4],
+				LeftDone:  false,
+				RightDone: false,
 			})
 		}
 	}
